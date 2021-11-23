@@ -6,15 +6,14 @@ const player = new Player(iframe);
 const LOCALPLAYER_KEY = "videoplayer-current-time";
 const lastSavedTime = localStorage.getItem(LOCALPLAYER_KEY);
 
-if (lastSavedTime !== null) {
-  const onPlay = function (data) {
+const onPlay = function (data) {
     const currentTime = data.seconds;
     localStorage.setItem(LOCALPLAYER_KEY, currentTime);
     console.log("current time of video", currentTime);
 }
-player.on('timeupdate', throttle(onPlay, 1000));  
-}
+player.on('timeupdate', throttle(onPlay, 1000));
 
+if (lastSavedTime !== null) {
 player.setCurrentTime(lastSavedTime).then(function(seconds) {
     // seconds = the actual time that the player seeked to
 }).catch(function(error) {
@@ -28,7 +27,9 @@ player.setCurrentTime(lastSavedTime).then(function(seconds) {
             break;
     }
 });
+};
 console.log("Last video time-set:", lastSavedTime);
+
 
 player.on("play", function () {
   console.log("played the video!");
