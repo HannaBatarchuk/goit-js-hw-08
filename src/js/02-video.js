@@ -13,7 +13,7 @@ const onPlay = function (data) {
 }
 player.on('timeupdate', throttle(onPlay, 1000));
 
-if (lastSavedTime !== null) {
+if (lastSavedTime != null) {
 player.setCurrentTime(lastSavedTime).then(function(seconds) {
     // seconds = the actual time that the player seeked to
 }).catch(function(error) {
