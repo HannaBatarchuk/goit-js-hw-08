@@ -37,12 +37,31 @@ function onInputChange (evt){
     // persistedForm[evt.target.name] = evt.target.value;
     // localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(persistedForm));
 }
-// - очищаємо дані в локальному сховищі та формі
+
+// - перевіряємо чи заповнені всі поля, якщо так - відправляємо дані та 
+// очищаємо локальне  сховище та форму, якщо ні виводимо повідомлення про те, що всі поля
+// треба заповнити
 function onInputFormSub(evt) {
     evt.preventDefault();
-    evt.currentTarget.reset();
-    localStorage.removeItem(LOCALSTORAGE_KEY);
-    console.log('Дані відправлено! Форма очищена.')
+    const formElements = evt.currentTarget.elements;
+    const email = formElements.email.value;
+    const message = formElements.message.value;
+
+    const formInputEl = {
+        email,
+        message,
+    };
+    
+    if(email === `` || message === ``){
+        windowAlertText(formInputEl);
+    } else {
+        evt.currentTarget.reset();
+        localStorage.removeItem(LOCALSTORAGE_KEY);
+        console.log('Дані відправлено! Форма очищена.')
+    }
+    function windowAlertText (){
+        window.alert(`Всі поля мають бути заповнені!`);
+    };
 }
 
 // - отримуємо дані зі сховища
